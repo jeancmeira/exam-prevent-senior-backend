@@ -28,13 +28,7 @@ public class LogService {
 			Date startDate,
 			Date endDate) {
 		
-		if (ip != null &&  !ip.trim().equals("")) {
-			
-			if (startDate == null || endDate == null) {
-				throw new RuntimeException("startDate and endDate are required.");	
-			}
-			
-		}
+		validateQueryParameters(ip, startDate, endDate);
 		
 		Pageable pageable = PageRequest.of(page - 1, RECORDS_BY_PAGE, Sort.by("date").descending());
 		
@@ -47,9 +41,18 @@ public class LogService {
 		
 		return recordsPage.getContent();
 	}
-	
-	public Long count() {
-		return logRepository.count();
+
+	public Long count(String ip,
+			Date startDate,
+			Date endDate) {
+		
+		validateQueryParameters(ip, startDate, endDate);
+
+		if (ip == null) {
+			return logRepository.count();
+		} else {
+			return logRepository.count(ip, startDate, endDate);	
+		}
 	}
 	
 	public void save(Log log) {
@@ -89,6 +92,16 @@ public class LogService {
 			return result.get();
 		} else {
 			return null;
+		}
+	}
+
+	private void validateQueryParameters(String ip, Date startDate, Date endDate) {
+		if (ip != null &&  !ip.trim().equals("")) {
+			
+			if (startDate == null || endDate == null) {
+				throw new RuntimeException("startDate and endDate are required.");	
+			}
+			
 		}
 	}
 

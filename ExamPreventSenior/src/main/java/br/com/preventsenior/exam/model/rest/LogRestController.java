@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.preventsenior.exam.common.DateFormatConstant;
 import br.com.preventsenior.exam.model.Log;
 import br.com.preventsenior.exam.service.LogService;
 
@@ -33,11 +34,11 @@ public class LogRestController {
 			@RequestParam(required=false) String ip
 			,
 			@RequestParam(required=false) 
-			@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+			@DateTimeFormat(pattern=DateFormatConstant.DATE_TIME_FORMAT)
 			Date startDate
 			,
 			@RequestParam(required=false)
-			@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+			@DateTimeFormat(pattern=DateFormatConstant.DATE_TIME_FORMAT)
 			Date endDate
 			) {
 		
