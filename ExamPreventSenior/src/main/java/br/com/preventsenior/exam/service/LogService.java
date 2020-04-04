@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.preventsenior.exam.model.Log;
 import br.com.preventsenior.exam.repository.LogRepository;
-import br.com.preventsenior.exam.vo.LogResult;
+import br.com.preventsenior.exam.vo.LogAggregation;
+import br.com.preventsenior.exam.vo.Result;
 
 @Service
 public class LogService {
@@ -22,7 +23,7 @@ public class LogService {
 	@Autowired
 	private LogRepository logRepository;
 	
-	public LogResult search(
+	public Result<Log> search(
 			Integer page,
 			String ip,
 			Date startDate,
@@ -30,9 +31,7 @@ public class LogService {
 		
 		validateQueryParameters(ip, startDate, endDate);
 		
-		Pageable pageable = PageRequest.of(page - 1,
-					RECORDS_BY_PAGE, Sort.by("date").descending());
-		
+		Pageable pageable = getPageable(page, "date");
 		Page<Log> recordsPage = null;
 		
 		if (ip == null) {
@@ -41,10 +40,20 @@ public class LogService {
 			recordsPage = logRepository.findAll(ip, startDate, endDate, pageable);
 		}
 
-		return new LogResult(recordsPage.getTotalPages(), 
+		return new Result<Log>(recordsPage.getTotalPages(), 
 					recordsPage.getContent());
 	}
 
+	public Result<LogAggregation> search(Integer page) {
+		
+		Pageable pageable = getPageable(page, "ip");
+		
+		Page<LogAggregation> recordsPage = logRepository.listTotalization(pageable);
+		
+		return new Result<LogAggregation>(recordsPage.getTotalPages(), 
+					recordsPage.getContent());
+	}
+	
 	public void save(Log log) {
 
 		if (log.getDate() == null) {
@@ -93,6 +102,12 @@ public class LogService {
 			}
 			
 		}
+	}
+	
+	private Pageable getPageable(Integer page, String sortField) {
+		Pageable pageable = PageRequest.of(page - 1,
+					RECORDS_BY_PAGE, Sort.by(sortField).descending());
+		return pageable;
 	}
 	
 }

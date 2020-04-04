@@ -2,15 +2,13 @@ package br.com.preventsenior.exam.vo;
 
 import java.util.List;
 
-import br.com.preventsenior.exam.model.Log;
-
-public class LogResult {
+public class Result<T> {
 
 	private Integer totalPages;
 
-	private List<Log> records;
+	private List<T> records;
 	
-	public LogResult(Integer totalPages, List<Log> records) {
+	public Result(Integer totalPages, List<T> records) {
 		this.totalPages = totalPages;
 		this.records = records;
 	}
@@ -19,8 +17,8 @@ public class LogResult {
 		return totalPages;
 	}
 
-	public List<Log> getRecords() {
+	public List<T> getRecords() {
 		return records;
 	}
-	
+
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.preventsenior.exam.common.DateFormatConstant;
 import br.com.preventsenior.exam.model.Log;
 import br.com.preventsenior.exam.service.LogService;
-import br.com.preventsenior.exam.vo.LogResult;
+import br.com.preventsenior.exam.vo.Result;
 
 @RestController
 @RequestMapping("/log")
@@ -30,7 +30,7 @@ public class LogRestController {
 	private LogService logService;
 	
 	@GetMapping
-	public LogResult list(@RequestParam Integer page, 
+	public Result<Log> search(@RequestParam Integer page, 
 			@RequestParam(required=false) String ip
 			,
 			@RequestParam(required=false) 
