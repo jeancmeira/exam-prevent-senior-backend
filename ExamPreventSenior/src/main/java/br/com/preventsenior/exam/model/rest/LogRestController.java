@@ -1,8 +1,10 @@
 package br.com.preventsenior.exam.model.rest;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,8 +29,20 @@ public class LogRestController {
 	private LogService logService;
 	
 	@GetMapping
-	public List<Log> list(@RequestParam Integer page) {
-		return logService.list(page);
+	public List<Log> list(@RequestParam Integer page, 
+			@RequestParam(required=false) String ip
+			,
+			@RequestParam(required=false) 
+			@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+			Date startDate
+			,
+			@RequestParam(required=false)
+			@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+			Date endDate
+			) {
+		
+		List<Log> list = logService.list(page, ip, startDate, endDate);
+		return list;
 	}
 	
 	@GetMapping("/{id}")

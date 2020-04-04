@@ -10,6 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import br.com.preventsenior.exam.json.serialization.CustomDateTimeDeserializer;
+import br.com.preventsenior.exam.json.serialization.CustomDateTimeSerializer;
+
 @Entity
 @Table(name="log")
 public class Log {
@@ -19,6 +25,8 @@ public class Log {
 	@SequenceGenerator(name="seq_generator", sequenceName = "seq_log", allocationSize=1)	
 	private Long id;
 	
+	@JsonDeserialize(using = CustomDateTimeDeserializer.class)
+	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	private Date date;
 	
 	private String ip;

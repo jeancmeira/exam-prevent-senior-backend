@@ -1,5 +1,6 @@
 package br.com.preventsenior.exam.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,9 +22,29 @@ public class LogService {
 	@Autowired
 	private LogRepository logRepository;
 	
-	public List<Log> list(Integer page) {
+	public List<Log> list(
+			Integer page,
+			String ip,
+			Date startDate,
+			Date endDate) {
+		
+		if (ip != null &&  !ip.trim().equals("")) {
+			
+			if (startDate == null || endDate == null) {
+				throw new RuntimeException("startDate and endDate are required.");	
+			}
+			
+		}
+		
 		Pageable pageable = PageRequest.of(page - 1, RECORDS_BY_PAGE, Sort.by("date").descending());
-		Page<Log> recordsPage = logRepository.findAll(pageable);
+		
+		Page<Log> recordsPage = null;
+		if (ip == null) {
+			recordsPage = logRepository.findAll(pageable);	
+		} else {
+			recordsPage = logRepository.findAll(ip, startDate, endDate, pageable);
+		}
+		
 		return recordsPage.getContent();
 	}
 	
