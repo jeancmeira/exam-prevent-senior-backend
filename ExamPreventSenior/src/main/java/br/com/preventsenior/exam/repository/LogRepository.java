@@ -6,5 +6,5 @@ import br.com.preventsenior.exam.model.Log;
 
 @org.springframework.stereotype.Repository
 public interface LogRepository extends JpaRepository<Log, Long> {
-		
+	
 }
