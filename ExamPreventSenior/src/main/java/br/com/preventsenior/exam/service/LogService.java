@@ -1,7 +1,6 @@
 package br.com.preventsenior.exam.service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.preventsenior.exam.model.Log;
 import br.com.preventsenior.exam.repository.LogRepository;
+import br.com.preventsenior.exam.vo.LogResult;
 
 @Service
 public class LogService {
@@ -22,7 +22,7 @@ public class LogService {
 	@Autowired
 	private LogRepository logRepository;
 	
-	public List<Log> list(
+	public LogResult search(
 			Integer page,
 			String ip,
 			Date startDate,
@@ -30,33 +30,21 @@ public class LogService {
 		
 		validateQueryParameters(ip, startDate, endDate);
 		
-		Pageable pageable = PageRequest.of(page - 1, RECORDS_BY_PAGE, Sort.by("date").descending());
+		Pageable pageable = PageRequest.of(page - 1,
+					RECORDS_BY_PAGE, Sort.by("date").descending());
 		
 		Page<Log> recordsPage = null;
+		
 		if (ip == null) {
 			recordsPage = logRepository.findAll(pageable);	
 		} else {
 			recordsPage = logRepository.findAll(ip, startDate, endDate, pageable);
 		}
-		
-		return recordsPage.getContent();
+
+		return new LogResult(recordsPage.getTotalPages(), 
+					recordsPage.getContent());
 	}
 
-	public Long getTotalPages(String ip, Date startDate, Date endDate) {
-		
-		Long totalRecords = count(ip, startDate, endDate);
-		
-		Long totalPages = totalRecords.longValue() / RECORDS_BY_PAGE.longValue();
-
-		Long modTotalPages = totalRecords.longValue() % RECORDS_BY_PAGE.longValue();
-		
-		if (modTotalPages > 0) {
-			totalPages++;
-		}
-		
-		return totalPages;
-	}
-	
 	public void save(Log log) {
 
 		if (log.getDate() == null) {
@@ -106,19 +94,5 @@ public class LogService {
 			
 		}
 	}
-	
-	private Long count(String ip,
-			Date startDate,
-			Date endDate) {
-		
-		validateQueryParameters(ip, startDate, endDate);
-
-		if (ip == null) {
-			return logRepository.count();
-		} else {
-			return logRepository.count(ip, startDate, endDate);	
-		}
-	}
-
 	
 }

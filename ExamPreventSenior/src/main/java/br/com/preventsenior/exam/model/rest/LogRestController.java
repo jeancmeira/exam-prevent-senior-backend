@@ -17,16 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.preventsenior.exam.common.DateFormatConstant;
-import br.com.preventsenior.exam.dto.LogResult;
 import br.com.preventsenior.exam.model.Log;
 import br.com.preventsenior.exam.service.LogService;
+import br.com.preventsenior.exam.vo.LogResult;
 
 @RestController
 @RequestMapping("/log")
 @CrossOrigin("*")
 public class LogRestController {
 
-	private static final int ZERO = 0;
 	@Autowired
 	private LogService logService;
 	
@@ -43,13 +42,7 @@ public class LogRestController {
 			Date endDate
 			) {
 		
-		LogResult logResult = new LogResult();
-		if (page.equals(ZERO)) {
-			logResult.setTotalPages(logService.getTotalPages(ip, startDate, endDate));
-		} else {
-			logResult.setRecords(logService.list(page, ip, startDate, endDate));
-		}
-		return logResult;
+		return logService.search(page, ip, startDate, endDate);
 	}
 	
 	@GetMapping("/{id}")
