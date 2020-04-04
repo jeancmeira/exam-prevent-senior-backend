@@ -32,7 +32,27 @@ public class LogService {
 	}
 	
 	public void save(Log log) {
-		//TODO VALIDAR
+
+		if (log.getDate() == null) {
+			throw new RuntimeException("Date is required.");
+		}
+		
+		if (log.getIp() == null || log.getIp().trim().equals("")) {
+			throw new RuntimeException("Ip is required.");
+		}
+		
+		if (log.getRequest() == null || log.getRequest().trim().equals("")) {
+			throw new RuntimeException("Request is required.");
+		}
+		
+		if (log.getUserAgent() == null || log.getUserAgent().trim().equals("")) {
+			throw new RuntimeException("User agent is required.");
+		}
+
+		if (log.getStatus() == null) {
+			throw new RuntimeException("Status is required.");
+		}
+
 		
 		logRepository.save(log);
 	}

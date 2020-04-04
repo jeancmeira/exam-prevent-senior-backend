@@ -20,11 +20,11 @@ ALTER TABLE public.seq_log
 CREATE TABLE public.log
 (
   id bigint NOT NULL,
-  date timestamp without time zone,
-  ip character varying(255),
-  request character varying(255),
-  status integer,
-  user_agent character varying(255),
+  date timestamp without time zone NOT NULL,
+  ip character varying(255) NOT NULL,
+  request character varying(255) NOT NULL,
+  status integer NOT NULL,
+  user_agent character varying(255) NOT NULL,
   CONSTRAINT log_pkey PRIMARY KEY (id)
 )
 WITH (
@@ -32,4 +32,3 @@ WITH (
 );
 ALTER TABLE public.log
   OWNER TO postgres;
-  
