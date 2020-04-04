@@ -2,8 +2,21 @@ package br.com.preventsenior.exam.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="log")
 public class Log {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator")
+	@SequenceGenerator(name="seq_generator", sequenceName = "seq_log")	
 	private Long id;
 	
 	private Date date;
@@ -14,6 +27,7 @@ public class Log {
 	
 	private Integer status;
 	
+	@Column(name="user_agent")
 	private String userAgent;
 
 	public Long getId() {
