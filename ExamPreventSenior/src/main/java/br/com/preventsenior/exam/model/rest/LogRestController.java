@@ -1,7 +1,6 @@
 package br.com.preventsenior.exam.model.rest;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.preventsenior.exam.common.DateFormatConstant;
+import br.com.preventsenior.exam.dto.LogResult;
 import br.com.preventsenior.exam.model.Log;
 import br.com.preventsenior.exam.service.LogService;
 
@@ -26,11 +26,12 @@ import br.com.preventsenior.exam.service.LogService;
 @CrossOrigin("*")
 public class LogRestController {
 
+	private static final int ZERO = 0;
 	@Autowired
 	private LogService logService;
 	
 	@GetMapping
-	public List<Log> list(@RequestParam Integer page, 
+	public LogResult list(@RequestParam Integer page, 
 			@RequestParam(required=false) String ip
 			,
 			@RequestParam(required=false) 
@@ -42,8 +43,13 @@ public class LogRestController {
 			Date endDate
 			) {
 		
-		List<Log> list = logService.list(page, ip, startDate, endDate);
-		return list;
+		LogResult logResult = new LogResult();
+		if (page.equals(ZERO)) {
+			logResult.setTotalPages(logService.getTotalPages(ip, startDate, endDate));
+		} else {
+			logResult.setRecords(logService.list(page, ip, startDate, endDate));
+		}
+		return logResult;
 	}
 	
 	@GetMapping("/{id}")

@@ -17,7 +17,7 @@ import br.com.preventsenior.exam.repository.LogRepository;
 @Service
 public class LogService {
 
-	private static final int RECORDS_BY_PAGE = 10;
+	private static final Integer RECORDS_BY_PAGE = 10;
 	
 	@Autowired
 	private LogRepository logRepository;
@@ -42,17 +42,19 @@ public class LogService {
 		return recordsPage.getContent();
 	}
 
-	public Long count(String ip,
-			Date startDate,
-			Date endDate) {
+	public Long getTotalPages(String ip, Date startDate, Date endDate) {
 		
-		validateQueryParameters(ip, startDate, endDate);
+		Long totalRecords = count(ip, startDate, endDate);
+		
+		Long totalPages = totalRecords.longValue() / RECORDS_BY_PAGE.longValue();
 
-		if (ip == null) {
-			return logRepository.count();
-		} else {
-			return logRepository.count(ip, startDate, endDate);	
+		Long modTotalPages = totalRecords.longValue() % RECORDS_BY_PAGE.longValue();
+		
+		if (modTotalPages > 0) {
+			totalPages++;
 		}
+		
+		return totalPages;
 	}
 	
 	public void save(Log log) {
@@ -102,6 +104,19 @@ public class LogService {
 				throw new RuntimeException("startDate and endDate are required.");	
 			}
 			
+		}
+	}
+	
+	private Long count(String ip,
+			Date startDate,
+			Date endDate) {
+		
+		validateQueryParameters(ip, startDate, endDate);
+
+		if (ip == null) {
+			return logRepository.count();
+		} else {
+			return logRepository.count(ip, startDate, endDate);	
 		}
 	}
 
