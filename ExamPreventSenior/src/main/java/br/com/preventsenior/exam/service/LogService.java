@@ -44,11 +44,11 @@ public class LogService {
 					recordsPage.getContent());
 	}
 
-	public Result<LogAggregation> search(Integer page) {
+	public Result<LogAggregation> searchAggregations(Integer page) {
 		
 		Pageable pageable = getPageable(page, "ip");
 		
-		Page<LogAggregation> recordsPage = logRepository.listTotalization(pageable);
+		Page<LogAggregation> recordsPage = logRepository.findAllAggregations(pageable);
 		
 		return new Result<LogAggregation>(recordsPage.getTotalPages(), 
 					recordsPage.getContent());

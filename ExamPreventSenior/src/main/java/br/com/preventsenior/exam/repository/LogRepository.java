@@ -19,6 +19,6 @@ public interface LogRepository extends JpaRepository<Log, Long> {
 	
 	@Query("SELECT count(l) as total, l.ip, l.userAgent, HOUR(l.date) as hour"
 			+ " FROM Log l group by l.ip, l.userAgent, HOUR(l.date)")
-	Page<LogAggregation> listTotalization(Pageable pageable);
+	Page<LogAggregation> findAllAggregations(Pageable pageable);
 	
 }
