@@ -16,7 +16,7 @@ public class Log {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator")
-	@SequenceGenerator(name="seq_generator", sequenceName = "seq_log")	
+	@SequenceGenerator(name="seq_generator", sequenceName = "seq_log", allocationSize=1)	
 	private Long id;
 	
 	private Date date;
