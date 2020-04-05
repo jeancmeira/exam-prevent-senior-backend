@@ -49,6 +49,9 @@ public class LogUploadRestController {
             is = new ByteArrayInputStream(bytes);
             bfReader = new BufferedReader(new InputStreamReader(is));
             String line = null;
+            
+            int index = 0;
+            
             while((line = bfReader.readLine()) != null){
                
             	String[] parts = line.split("\\|");
@@ -59,8 +62,6 @@ public class LogUploadRestController {
             	
             	Date date = convertToDate(parts[0]);
             	
-            	System.out.println(parts[0]);
-            	
             	String ip = parts[1];
             	
             	String request = removeDoubleQuotes(parts[2]);
@@ -68,7 +69,29 @@ public class LogUploadRestController {
             	Integer status = convertToInteger(parts[3]);
             	
             	String userAgent = removeDoubleQuotes(parts[4]);
+
+            	index++;
             	
+            	if (date == null) {
+            		throw new RuntimeException("Invalid date format in line [" + index + "] .");
+            	}
+            	
+            	if (ip == null) {
+            		throw new RuntimeException("Invalid ip format in line [" + index + "] .");
+            	}
+            	
+            	if (request == null) {
+            		throw new RuntimeException("Invalid ip request in line [" + index + "] .");
+            	}
+
+            	if (status == null) {
+            		throw new RuntimeException("Invalid ip status in line [" + index + "] .");
+            	}
+
+            	if (userAgent == null) {
+            		throw new RuntimeException("Invalid ip userAgent in line [" + index + "] .");
+            	}
+
             	System.out.println(date);
             	System.out.println(ip);
             	System.out.println(request);
