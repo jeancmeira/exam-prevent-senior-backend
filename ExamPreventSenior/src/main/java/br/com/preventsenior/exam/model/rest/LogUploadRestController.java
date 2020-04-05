@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +21,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.preventsenior.exam.common.DateFormatConstant;
 import br.com.preventsenior.exam.model.Log;
+import br.com.preventsenior.exam.service.LogService;
 
 @RestController
 @RequestMapping("/log-upload")
 @CrossOrigin("*")
 public class LogUploadRestController {
 
+	@Autowired
+	private LogService logService;
+	
 	@PostMapping
 	public Boolean handleFileUpload(@RequestParam("file") MultipartFile file) {
 
 		try {
 			List<Log> list = readLines(file.getBytes());
+			
+			logService.addLogs(list);
+			
 		} catch (RuntimeException e) {			
 			throw e;
 		} catch (Exception e) {

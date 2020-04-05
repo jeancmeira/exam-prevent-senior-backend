@@ -1,7 +1,10 @@
 package br.com.preventsenior.exam.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -84,6 +87,21 @@ public class LogService {
 		logRepository.delete(log);
 	}
 
+	@Transactional
+	public void addLogs(List<Log> logs) {
+		
+		if (logs == null || logs.isEmpty()) {
+			throw new RuntimeException("Logs are required.");
+		}
+		
+		for (Log log : logs) {
+
+			save(log);
+			
+		}
+		
+	}
+	
 	public Log find(Long id) {
 		Optional<Log> result = logRepository.findById(id);
 		
@@ -109,5 +127,6 @@ public class LogService {
 					RECORDS_BY_PAGE, Sort.by(sortField).descending());
 		return pageable;
 	}
+
 	
 }
