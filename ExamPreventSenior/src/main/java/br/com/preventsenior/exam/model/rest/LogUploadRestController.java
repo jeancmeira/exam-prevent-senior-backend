@@ -57,11 +57,11 @@ public class LogUploadRestController {
             	
             	String ip = parts[1];
             	
-            	String request = parts[2];
+            	String request = removeDoubleQuotes(parts[2]);
             	
             	String sStatus = parts[3];
             	
-            	String userAgent = parts[4];
+            	String userAgent = removeDoubleQuotes(parts[4]);
             	
             	System.out.println(sData);
             	System.out.println(ip);
@@ -84,6 +84,23 @@ public class LogUploadRestController {
             }
         }
 		return list;
+	}
+
+	private String removeDoubleQuotes(String value) {
+		if (value == null || value.trim().length() < 3) {
+			return null;
+		}
+		
+		if (value.charAt(0) != '"') {
+			return null;
+		}
+		
+		if (value.charAt(value.length() - 1) != '"') {
+			return null;
+		}
+
+		String newValue = value.substring(1, value.length() - 1);
+		return newValue;
 	}
 	
 }
