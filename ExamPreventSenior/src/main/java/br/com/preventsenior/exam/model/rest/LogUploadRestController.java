@@ -81,25 +81,25 @@ public class LogUploadRestController {
             	}
             	
             	if (request == null) {
-            		throw new RuntimeException("Invalid ip request in line [" + index + "] .");
+            		throw new RuntimeException("Invalid request format in line [" + index + "] .");
             	}
 
             	if (status == null) {
-            		throw new RuntimeException("Invalid ip status in line [" + index + "] .");
+            		throw new RuntimeException("Invalid status format in line [" + index + "] .");
             	}
 
             	if (userAgent == null) {
-            		throw new RuntimeException("Invalid ip userAgent in line [" + index + "] .");
+            		throw new RuntimeException("Invalid userAgent format in line [" + index + "] .");
             	}
 
-            	System.out.println(date);
-            	System.out.println(ip);
-            	System.out.println(request);
-            	System.out.println(status);
-            	System.out.println(userAgent);
-            	System.out.println();
-            	
-            	
+            	Log log = new Log();
+            	log.setDate(date);
+            	log.setIp(ip);
+            	log.setRequest(request);
+            	log.setStatus(status);
+            	log.setUserAgent(userAgent);
+
+            	list.add(log);
             }
         } catch (IOException e) {
             e.printStackTrace();
