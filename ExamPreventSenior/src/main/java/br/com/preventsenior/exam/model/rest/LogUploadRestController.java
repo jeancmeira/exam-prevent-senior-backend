@@ -5,7 +5,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.preventsenior.exam.common.DateFormatConstant;
 import br.com.preventsenior.exam.model.Log;
 
 @RestController
@@ -53,20 +57,22 @@ public class LogUploadRestController {
             		throw new RuntimeException("Invalid log file format.");
             	}
             	
-            	String sData = parts[0];
+            	Date date = convertToDate(parts[0]);
+            	
+            	System.out.println(parts[0]);
             	
             	String ip = parts[1];
             	
             	String request = removeDoubleQuotes(parts[2]);
             	
-            	String sStatus = parts[3];
+            	Integer status = convertToInteger(parts[3]);
             	
             	String userAgent = removeDoubleQuotes(parts[4]);
             	
-            	System.out.println(sData);
+            	System.out.println(date);
             	System.out.println(ip);
             	System.out.println(request);
-            	System.out.println(sStatus);
+            	System.out.println(status);
             	System.out.println(userAgent);
             	System.out.println();
             	
@@ -84,6 +90,22 @@ public class LogUploadRestController {
             }
         }
 		return list;
+	}
+
+	private Integer convertToInteger(String value) {
+		try {
+			return Integer.valueOf(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	private Date convertToDate(String value) {
+		try {
+			return new SimpleDateFormat(DateFormatConstant.FILE_DATE_TIME_FORMAT).parse(value);
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 
 	private String removeDoubleQuotes(String value) {
