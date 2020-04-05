@@ -73,5 +73,4 @@ public class LogRestController {
 			return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
 	}
-
 }
