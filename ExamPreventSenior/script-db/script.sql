@@ -17,10 +17,10 @@ ALTER TABLE public.seq_log
   OWNER TO postgres;
 
 
-CREATE TABLE public.log
+REATE TABLE public.log
 (
   id bigint NOT NULL,
-  date timestamp without time zone NOT NULL,
+  date timestamp with time zone NOT NULL,
   ip character varying(255) NOT NULL,
   request character varying(255) NOT NULL,
   status integer NOT NULL,
