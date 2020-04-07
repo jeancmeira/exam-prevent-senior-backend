@@ -18,24 +18,47 @@ import br.com.preventsenior.exam.json.serialization.CustomDateTimeSerializer;
 
 @Entity
 @Table(name="log")
+/**
+ * Classe Log
+ * @author Jean
+ *
+ */
 public class Log {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator")
-	@SequenceGenerator(name="seq_generator", sequenceName = "seq_log", allocationSize=1)	
+	@SequenceGenerator(name="seq_generator", sequenceName = "seq_log", allocationSize=1)
+	/**
+	 * Id
+	 */
 	private Long id;
 	
 	@JsonDeserialize(using = CustomDateTimeDeserializer.class)
 	@JsonSerialize(using = CustomDateTimeSerializer.class)
+	/**
+	 * Data
+	 */
 	private Date date;
 	
+	/**
+	 * ip
+	 */
 	private String ip;
 	
+	/**
+	 * Request
+	 */
 	private String request;
 	
+	/**
+	 * Status
+	 */
 	private Integer status;
 	
 	@Column(name="user_agent")
+	/**
+	 * User agent
+	 */
 	private String userAgent;
 
 	public Long getId() {

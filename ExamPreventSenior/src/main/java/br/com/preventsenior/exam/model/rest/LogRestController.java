@@ -24,12 +24,25 @@ import br.com.preventsenior.exam.vo.Result;
 @RestController
 @RequestMapping("/log")
 @CrossOrigin("*")
+/**
+ * 
+ * @author Jean
+ * Classe de Rest Controller de Logs
+ */
 public class LogRestController {
 
 	@Autowired
 	private LogService logService;
 	
 	@GetMapping
+	/**
+	 * Method que busca os logs
+	 * @param page
+	 * @param ip
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	public Result<Log> search(@RequestParam Integer page, 
 			@RequestParam(required=false) String ip
 			,
@@ -45,7 +58,13 @@ public class LogRestController {
 		return logService.search(page, ip, startDate, endDate);
 	}
 	
+	
 	@GetMapping("/{id}")
+	/**
+	 * Metodo que busca por id
+	 * @param id
+	 * @return
+	 */
 	public ResponseEntity<Log> find(@PathVariable Long id) {
 		Log log = logService.find(id);
 		
@@ -56,12 +75,22 @@ public class LogRestController {
 	}
 
 	@PostMapping
+	/**
+	 * Metodo que salva
+	 * @param log
+	 * @return
+	 */
 	public Long save(@RequestBody Log log) {
 		logService.save(log);
 		return log.getId();
 	}
 	
 	@DeleteMapping("/{id}")
+	/**
+	 * Metodo que exclui
+	 * @param id
+	 * @return
+	 */
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 		
 		Log log = logService.find(id);

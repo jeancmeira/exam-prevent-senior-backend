@@ -19,6 +19,11 @@ import br.com.preventsenior.exam.vo.LogAggregation;
 import br.com.preventsenior.exam.vo.Result;
 
 @Service
+/**
+ * Classe service
+ * @author Jean
+ *
+ */
 public class LogService {
 
 	private static final Integer RECORDS_BY_PAGE = 10;
@@ -26,6 +31,14 @@ public class LogService {
 	@Autowired
 	private LogRepository logRepository;
 	
+	/**
+	 * Metodo que busca os logs
+	 * @param page
+	 * @param ip
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	public Result<Log> search(
 			Integer page,
 			String ip,
@@ -47,6 +60,11 @@ public class LogService {
 					recordsPage.getContent());
 	}
 
+	/**
+	 * Metodo que busca o dashboard
+	 * @param page
+	 * @return
+	 */
 	public Result<LogAggregation> searchAggregations(Integer page) {
 		
 		Pageable pageable = getPageable(page, "ip");
@@ -57,6 +75,10 @@ public class LogService {
 					recordsPage.getContent());
 	}
 	
+	/**
+	 * Metodo que salva
+	 * @param log
+	 */
 	public void save(Log log) {
 
 		if (log.getDate() == null) {
@@ -83,11 +105,19 @@ public class LogService {
 		logRepository.save(log);
 	}
 
+	/**
+	 * Metodo que exclui
+	 * @param log
+	 */
 	public void delete(Log log) {
 		logRepository.delete(log);
 	}
 
 	@Transactional
+	/**
+	 * Metodo que adiciona os logs
+	 * @param logs
+	 */
 	public void addLogs(List<Log> logs) {
 		
 		if (logs == null || logs.isEmpty()) {
@@ -102,6 +132,11 @@ public class LogService {
 		
 	}
 	
+	/**
+	 * Metodo que busca por id
+	 * @param id
+	 * @return
+	 */
 	public Log find(Long id) {
 		Optional<Log> result = logRepository.findById(id);
 		
@@ -112,6 +147,12 @@ public class LogService {
 		}
 	}
 
+	/**
+	 * Metodo que valida os parametros
+	 * @param ip
+	 * @param startDate
+	 * @param endDate
+	 */
 	private void validateQueryParameters(String ip, Date startDate, Date endDate) {
 		if (ip != null &&  !ip.trim().equals("")) {
 			
@@ -122,6 +163,12 @@ public class LogService {
 		}
 	}
 	
+	/**
+	 * Metodo que cria o obeto de paginacao
+	 * @param page
+	 * @param sortField
+	 * @return
+	 */
 	private Pageable getPageable(Integer page, String sortField) {
 		Pageable pageable = PageRequest.of(page - 1,
 					RECORDS_BY_PAGE, Sort.by(sortField).descending());

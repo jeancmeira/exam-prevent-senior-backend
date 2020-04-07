@@ -10,6 +10,11 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import br.com.preventsenior.exam.common.DateFormatConstant;
 
+/**
+ * Converte data em string
+ * @author Jean
+ *
+ */
 public class CustomDateTimeSerializer extends StdSerializer<Date> {
 
 	private static final long serialVersionUID = 1L;

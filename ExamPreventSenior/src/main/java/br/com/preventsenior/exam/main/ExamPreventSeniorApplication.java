@@ -10,6 +10,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("br.com.preventsenior.exam")
 @EnableJpaRepositories("br.com.preventsenior.exam.repository")
 @EntityScan("br.com.preventsenior.exam.model")
+/**
+ * Classe inicial start
+ * @author Jean
+ *
+ */
 public class ExamPreventSeniorApplication {
 
 	public static void main(String[] args) {
