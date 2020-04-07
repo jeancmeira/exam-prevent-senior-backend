@@ -1,5 +1,6 @@
 package br.com.preventsenior.exam.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class LogService {
 		if (ip == null) {
 			recordsPage = logRepository.findAll(pageable);	
 		} else {
-			recordsPage = logRepository.findAll(ip, startDate, endDate, pageable);
+			recordsPage = logRepository.findAll(ip, getDateWithSeconds(startDate, 0), getDateWithSeconds(endDate,999), pageable);
 		}
 
 		return new Result<Log>(recordsPage.getTotalPages(), 
@@ -173,6 +174,19 @@ public class LogService {
 		Pageable pageable = PageRequest.of(page - 1,
 					RECORDS_BY_PAGE, Sort.by(sortField).descending());
 		return pageable;
+	}
+
+	/**
+	 * Definir miliseconds
+	 * @param endDate
+	 * @param i
+	 * @return
+	 */
+	private Date getDateWithSeconds(Date date, int miliseconds) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.MILLISECOND, miliseconds);
+		return c.getTime();
 	}
 
 	
