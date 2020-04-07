@@ -60,23 +60,23 @@ public class LogService {
 	public void save(Log log) {
 
 		if (log.getDate() == null) {
-			throw new RuntimeException("Date is required.");
+			throw new RuntimeException("Favor informar a data.");
 		}
 		
 		if (log.getIp() == null || log.getIp().trim().equals("")) {
-			throw new RuntimeException("Ip is required.");
+			throw new RuntimeException("Favor informar o IP.");
 		}
 		
 		if (log.getRequest() == null || log.getRequest().trim().equals("")) {
-			throw new RuntimeException("Request is required.");
+			throw new RuntimeException("Favor informar o request.");
 		}
 		
 		if (log.getUserAgent() == null || log.getUserAgent().trim().equals("")) {
-			throw new RuntimeException("User agent is required.");
+			throw new RuntimeException("Favor informar o User agent.");
 		}
 
 		if (log.getStatus() == null) {
-			throw new RuntimeException("Status is required.");
+			throw new RuntimeException("Favor informar o Status.");
 		}
 
 		
@@ -91,7 +91,7 @@ public class LogService {
 	public void addLogs(List<Log> logs) {
 		
 		if (logs == null || logs.isEmpty()) {
-			throw new RuntimeException("Logs are required.");
+			throw new RuntimeException("Os logs são requeridos.");
 		}
 		
 		for (Log log : logs) {
@@ -116,7 +116,7 @@ public class LogService {
 		if (ip != null &&  !ip.trim().equals("")) {
 			
 			if (startDate == null || endDate == null) {
-				throw new RuntimeException("startDate and endDate are required.");	
+				throw new RuntimeException("Favor informar Data inicial e final.");	
 			}
 			
 		}

@@ -65,7 +65,7 @@ public class LogUploadRestController {
             	String[] parts = line.split("\\|");
             	
             	if (parts.length < 5) {
-            		throw new RuntimeException("Invalid log file format.");
+            		throw new RuntimeException("Arquivo com formato invalido.");
             	}
             	
             	Date date = convertToDate(parts[0]);
@@ -81,23 +81,23 @@ public class LogUploadRestController {
             	index++;
             	
             	if (date == null) {
-            		throw new RuntimeException("Invalid date format in line [" + index + "] .");
+            		throw new RuntimeException("Formato de data invalido na linha [" + index + "] .");
             	}
             	
             	if (ip == null) {
-            		throw new RuntimeException("Invalid ip format in line [" + index + "] .");
+            		throw new RuntimeException("Formato de IP invalido na linha [" + index + "] .");
             	}
             	
             	if (request == null) {
-            		throw new RuntimeException("Invalid request format in line [" + index + "] .");
+            		throw new RuntimeException("Formato de request invalido na linha [" + index + "] .");
             	}
 
             	if (status == null) {
-            		throw new RuntimeException("Invalid status format in line [" + index + "] .");
+            		throw new RuntimeException("Formato de status invalido na linha [" + index + "] .");
             	}
 
             	if (userAgent == null) {
-            		throw new RuntimeException("Invalid userAgent format in line [" + index + "] .");
+            		throw new RuntimeException("Formato de userAgent invalido na linha [" + index + "] .");
             	}
 
             	Log log = new Log();
