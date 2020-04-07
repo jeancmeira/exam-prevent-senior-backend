@@ -17,7 +17,7 @@ ALTER TABLE public.seq_log
   OWNER TO postgres;
 
 
-REATE TABLE public.log
+CREATE TABLE public.log
 (
   id bigint NOT NULL,
   date timestamp with time zone NOT NULL,
